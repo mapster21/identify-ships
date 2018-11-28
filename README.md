@@ -47,11 +47,15 @@ DTC, Decision Tree Classifier:    0.900625 (0.019304)
 
 XGB, XGB Classifier:              0.959063 (0.010866)
 
- 
-Keras CNN #1C - accuracy: 0.9675
+
+Keras CNN #1C - accuracy: 0.9675 
+
+
               precision    recall  f1-score   support
+
      No Ship       0.98      0.98      0.98       605
         Ship       0.94      0.92      0.93       195
+
    micro avg       0.97      0.97      0.97       800
    macro avg       0.96      0.95      0.96       800
 weighted avg       0.97      0.97      0.97       800
