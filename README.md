@@ -21,7 +21,7 @@ Convolutional neural networks are deep artificial neural networks that are used 
 This convolutional network predicts with >90% accuracy whether or not a given "image chip" contained an image of a ship.
 
 # Setup
-Python 3.5+ is required for compatability
+Python 3.5+ is required for compatability. Anaconda Prompt was used to confirm Conda was installed correctly and to insatll the new verion of python in a new environment and then activate it for use with Spyder - conda code for this is in Conda_EnvSetUpCommands.txt
 
 # Clone this repository
 git clone https://github.com/mapster21/identify-ships.git
