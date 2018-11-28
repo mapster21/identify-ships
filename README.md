@@ -2,6 +2,15 @@
 # Identifying Ships in Satellite Imagery
 This repository contains scripts that enable the automatic detection of container ships in Planet imagery using machine learning techniques. Included are files which define a machine learning model, train it using the ShipsNet dataset, and apply it across an entire image scene to highlight ship detections.
 
+# Input Data
+JSON formatted file containing data, labels, scene id's, and location metadata:
+
+kaggle datasets download -d rhammell/ships-in-satellite-imagery
+
+All 4000 image clips:
+
+https://www.kaggle.com/rhammell/ships-in-satellite-imagery#shipsnet.zip
+
 # Methodology
 ShipsNet is a labeled training dataset consiting of image chips extracted from Planet satellite imagery. It contains hundreds of 80x80 pixel RGB image chips labeled with either a "ship" or "no-ship" classification. 
 
