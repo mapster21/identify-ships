@@ -34,19 +34,24 @@ Several standard classifiers are compared and their K-Fold Cross-Validatiaon Acc
 
 # Results
 LR, Logistic Regression:          0.891562 (0.008155)
+
 RF, Random Forest Classifier:     0.936875 (0.016044)
+
 SVM, Support Vector Machine SVC:  0.748437 (0.022240)
+
 LSVM, Linear SVC:                 0.886562 (0.010648)
+
 GNB, Gaussian NB:                 0.631563 (0.028417)
+
 DTC, Decision Tree Classifier:    0.900625 (0.019304)
+
 XGB, XGB Classifier:              0.959063 (0.010866)
 
-Keras CNN #1C - accuracy: 0.9675 
-
+ 
+Keras CNN #1C - accuracy: 0.9675
               precision    recall  f1-score   support
      No Ship       0.98      0.98      0.98       605
         Ship       0.94      0.92      0.93       195
-
    micro avg       0.97      0.97      0.97       800
    macro avg       0.96      0.95      0.96       800
 weighted avg       0.97      0.97      0.97       800
