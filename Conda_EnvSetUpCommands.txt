@@ -24,7 +24,7 @@ pip install keras
 
 #Once deep learning environment is correctly set up open Spyder (py36)
 #Check that python 3.6 is running in IPython console
-#Open ships.py in Spyder (py36)
+#Open ships2.py in Spyder (py36)
 #Run the whole script at once
 
 
