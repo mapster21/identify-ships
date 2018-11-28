@@ -5,6 +5,8 @@ This repository contains scripts that enable the automatic detection of containe
 # Methodology
 ShipsNet is a labeled training dataset consiting of image chips extracted from Planet satellite imagery. It contains hundreds of 80x80 pixel RGB image chips labeled with either a "ship" or "no-ship" classification. 
 
+Example images are contained in the images directory.
+
 Convolutional neural networks are deep artificial neural networks that are used primarily to classify images (e.g. name what they see), cluster them by similarity (photo search), and perform object recognition within scenes. 
 
 This convolutional network predicts with >90% accuracy whether or not a given "image chip" contained an image of a ship.
@@ -30,4 +32,25 @@ Class MLPClassifier implements a multi-layer perceptron (MLP) algorithm that tra
 # Ship Classification
 Several standard classifiers are compared and their K-Fold Cross-Validatiaon Accuracy returned numerically, and graphically as a boxplot. These results are then compared with the Keras CNN accuracy.
 
-Example images are contained in the images directory.
+# Results
+LR, Logistic Regression:          0.891562 (0.008155)
+RF, Random Forest Classifier:     0.936875 (0.016044)
+SVM, Support Vector Machine SVC:  0.748437 (0.022240)
+LSVM, Linear SVC:                 0.886562 (0.010648)
+GNB, Gaussian NB:                 0.631563 (0.028417)
+DTC, Decision Tree Classifier:    0.900625 (0.019304)
+XGB, XGB Classifier:              0.959063 (0.010866)
+
+Keras CNN #1C - accuracy: 0.9675 
+
+              precision    recall  f1-score   support
+     No Ship       0.98      0.98      0.98       605
+        Ship       0.94      0.92      0.93       195
+
+   micro avg       0.97      0.97      0.97       800
+   macro avg       0.96      0.95      0.96       800
+weighted avg       0.97      0.97      0.97       800
+
+With this Keras CNN we were able to predict with >96% accuracy whether or not a given "image chip" contained an image of a ship. Interestingly, we had a similar results with both XGB Classifier and Keras CNN.
+
+Results graphics are contained in the results directory.
