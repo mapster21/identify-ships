@@ -19,12 +19,21 @@ from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 import keras
 from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation, Flatten, Conv2D, MaxPooling2D
+from keras import initializers, layers, models
+from keras.utils import to_categorical
+from keras.preprocessing.image import ImageDataGenerator
+from keras.callbacks import Callback, EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
+from keras import callbacks
+from keras.utils.vis_utils import plot_model
 from keras.utils import to_categorical
 from keras.preprocessing.image import ImageDataGenerator
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 # Load Data
+# The data are true-color images which use visible light — Red, Green and Blue wavelength, so the colors are similar to what a person would see from space. 
+# Each image is made up of 1 Red band, 1 Green band and 1 Blue band
 with open('C:/Users/Claire/ships-in-satellite-imagery/shipsnet.json') as data_file:dataset = json.load(data_file)
 Shipsnet= pd.DataFrame(dataset)
 print(Shipsnet.head())
@@ -39,20 +48,20 @@ print('Image shape (Width, Height, Channels): {}'.format(x[0].shape))
 describeData(x,y)
 
 # Reshape Data
-xReshaped = x.reshape([-1, 3, 80, 80]).transpose([0,2,3,1])
-yReshaped = to_categorical(y, num_classes=2)
+xReshape = x.reshape([-1, 3, 80, 80]).transpose([0,2,3,1])
+yReshape = to_categorical(y, num_classes=2)
 print("Data Shape",x.shape)
 print('Labels Shape',y.shape)
-print('Reshaped Data Shape',xReshaped.shape)
-print('Reshaped Labels Shape',yReshaped.shape)
-def describeDataset(xReshaped,yReshaped):print("\n'X' shape: %s."%(xReshaped.shape,))
-print("\n'y' shape: %s."%(yReshaped.shape,))
+print('Reshaped Data Shape',xReshape.shape)
+print('Reshaped Labels Shape',yReshape.shape)
+def describeDataset(xReshape,yReshape):print("\n'X' shape: %s."%(xReshape.shape,))
+print("\n'y' shape: %s."%(yReshape.shape,))
 print("\nUnique elements in y: %s"%(np.unique(y)))
-describeDataset(xReshaped,yReshaped)
+describeDataset(xReshape,yReshape)
 
 # Plot Data
-imgs0 = xReshaped[y==0] 
-imgs1 = xReshaped[y==1] 
+imgs0 = xReshape[y==0] 
+imgs1 = xReshape[y==1] 
 
 def plotOne(a,b):
     """
@@ -68,7 +77,7 @@ plotOne(imgs0, imgs1)
 
 def plotTwo(a,b): 
     """
-    Plot a bunch of numpy arrays sorted by label
+    Plot a selection of numpy arrays sorted by label
     """
     for row in range(3):
         plt.figure(figsize=(20, 10))
@@ -83,6 +92,9 @@ def plotTwo(a,b):
             plt.axis('off')
 plotTwo(imgs0, imgs1)
 
+#A pixel is a small block that represents the amount of gray intensity to be displayed for 
+# that particular portion of the image. For most images, pixel values are integers that 
+# range from 0 (black) to 255 (white).
 def plotHistogram(a):
     """
     Plot histogram of RGB Pixel Intensities
@@ -99,11 +111,11 @@ def plotHistogram(a):
     plt.hist(a[:,:,0].flatten(), bins= n_bins, lw = 0, color='r', alpha=0.5);
     plt.hist(a[:,:,1].flatten(), bins= n_bins, lw = 0, color='g', alpha=0.5);
     plt.hist(a[:,:,2].flatten(), bins= n_bins, lw = 0, color='b', alpha=0.5);
-plotHistogram(xReshaped[100])
+plotHistogram(xReshape[100])
 
 # Preprocess Data
-xReshaped = xReshaped/255
-plotHistogram(xReshaped[100])
+xReshape = xReshape/255 #where 255 is the max pixel intensity
+plotHistogram(xReshape[100])
 
 x_train,x_test,y_train,y_test = train_test_split(x,y,test_size = 0.2 ,random_state = 123)
 
@@ -113,13 +125,13 @@ y_train = y_train[0:300000]
 x_test = x_test[0:300000] 
 y_test = y_test[0:300000]
 
-x_trainReshaped,x_testReshaped,y_trainReshaped,y_testReshaped = train_test_split(xReshaped,yReshaped,test_size = 0.2 ,random_state = 123)
+x_trainReshape,x_testReshape,y_trainReshape,y_testReshape = train_test_split(xReshape,yReshape,test_size = 0.2 ,random_state = 123)
 
 # Reduce Sample Size for Debugging
-x_trainReshaped = x_trainReshaped[0:300000] 
-y_trainReshaped = y_trainReshaped[0:300000]
-x_testReshaped = x_testReshaped[0:300000] 
-y_testReshaped = y_testReshaped[0:300000]
+x_trainReshape = x_trainReshape[0:300000] 
+y_trainReshape = y_trainReshape[0:300000]
+x_testReshape = x_testReshape[0:300000] 
+y_testReshape = y_testReshape[0:300000]
 
 # Compare Standard Classifiers
 LogisticRegression(solver='lbfgs')
@@ -130,8 +142,8 @@ def compareModelAccuracy(a,b,c,d):
     models.append(('LR', LogisticRegression()))
     models.append(('RF', RandomForestClassifier()))
 #    models.append(('SVM', SVC())) # takes hours to run!
-    models.append(('LSVM', LinearSVC()))
-    models.append(('GNB', GaussianNB()))
+#    models.append(('LSVM', LinearSVC()))
+#    models.append(('GNB', GaussianNB()))
     models.append(('DTC', DecisionTreeClassifier()))
     models.append(('XGB', XGBClassifier()))
     resultsAccuracy = []
@@ -161,8 +173,8 @@ def defineModels():
     print('LR = LogisticRegression')
     print('RF = RandomForestClassifier')
 #    print('SVM = Support Vector Machine SVC')
-    print('LSVM = LinearSVC')
-    print('GNB = GaussianNB')
+#    print('LSVM = LinearSVC')
+#    print('GNB = GaussianNB')
     print('DTC = DecisionTreeClassifier')
     print('XGB = XGBClassifier')
     return
@@ -170,9 +182,9 @@ defineModels()
 
 # Define Helper Functions
 # Plot confusion matrix
-def plot_confusion_matrix(cm, classes,
+def plotConfusionMatrix(cm, classes,
                           normalize=False,
-                          title='Confusion matrix',
+                          title='Confusion Matrix',
                           cmap=plt.cm.Blues):
     """
     This function prints and plots the confusion matrix.
@@ -225,31 +237,31 @@ def plotKerasLearningCurve():
     plt.grid()
     plt.xlabel('Number of epochs')
 
-def plot_learning_curve(history):
+def plotLearningCurve(history):
     plt.figure(figsize=(8,8))
     plt.subplot(1,2,1)
     plt.plot(history.history['acc'])
     plt.plot(history.history['val_acc'])
-    plt.title('model accuracy')
-    plt.ylabel('accuracy')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
+    plt.title('Model Accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Test'], loc='upper left')
     plt.savefig('./accuracy_curve.png')
 
     # summarize history for loss
     plt.subplot(1,2,2)
     plt.plot(history.history['loss'])
     plt.plot(history.history['val_loss'])
-    plt.title('model loss')
-    plt.ylabel('loss')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
+    plt.title('Model Loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Test'], loc='upper left')
     plt.savefig('./loss_curve.png')
     
 dict_characters = {0: 'No Ship', 1: 'Ship'}
 
 # Evaluate Convolutional Network
-def runKerasCNNAugment(a,b,c,d):
+def runKerasCNN(a,b,c,d):
     batch_size = 128
     num_classes = 2
     epochs = 12
@@ -291,9 +303,9 @@ def runKerasCNNAugment(a,b,c,d):
     Y_true = np.argmax(d,axis = 1) 
     plotKerasLearningCurve()
     plt.show()  
-    plot_learning_curve(history)
+    plotLearningCurve(history)
     plt.show()
     confusion_mtx = confusion_matrix(Y_true, Y_pred_classes) 
-    plot_confusion_matrix(confusion_mtx, classes = list(dict_characters.values())) 
+    plotConfusionMatrix(confusion_mtx, classes = list(dict_characters.values())) 
     plt.show()    
-runKerasCNNAugment(x_trainReshaped, y_trainReshaped,  x_testReshaped, y_testReshaped)
+runKerasCNN(x_trainReshape, y_trainReshape,  x_testReshape, y_testReshape)
