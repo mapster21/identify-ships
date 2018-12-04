@@ -28,7 +28,8 @@ ShipsNet is a labeled training dataset consiting of image chips extracted from P
 
 # Ships.py
 The Keras Sequential model in ships.py is a linear stack of layers. An input_shape arguement is passed to the first layer. The learning process is done via the compile method using Stochastic gradient descent (SGD) optimizer, with categorical_crossentropy string identifier and as this is a classification problem the 'accuracy' metric. The model is trained on a Numpy array of input data and labels using the fit function iterating on the data in batches of 32 samples.
-The model was run on the 4 different images of San Francisco Bay. In each run the model correctly identified ships but it also misclassified areas as 'ships'. Results and graphics are contained in the results/ships directory.
+
+The model was run on the 4 different images of San Francisco Bay (in the 'images' folder). In each run the model correctly identified ships but it also misclassified areas as 'ships'. Results and graphics are contained in the results/ships directory.
 
 # Ships2.py
 Convolutional neural networks are deep artificial neural networks that are used primarily to classify images (e.g. name what they see), cluster them by similarity (photo search), and perform object recognition within scenes. The convolutional network in ships2.py 	predicts with >90% accuracy whether or not a given "image chip" contained an image of a ship.
