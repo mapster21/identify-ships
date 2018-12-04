@@ -62,14 +62,13 @@ Several standard classifiers are compared and their K-Fold Cross-Validatiaon Acc
 	Keras CNN #1C - accuracy: 0.9675 
 
 
-              	precision    recall  f1-score   support
-
-     No Ship       0.98      0.98      0.98       605
-        Ship       0.94      0.92      0.93       195
-
-   micro avg       0.97      0.97      0.97       800
-   macro avg       0.96      0.95      0.96       800
-weighted avg       0.97      0.97      0.97       800
+              		precision    recall  f1-score   support
+				No Ship       0.98      0.98      0.98       605
+		 			 Ship       0.94      0.92      0.93       195
+					 
+			micro avg       0.97      0.97      0.97       800
+			macro avg       0.96      0.95      0.96       800
+  	weighted avg      0.97      0.97      0.97       800
 
 With this Keras CNN we were able to predict with >96% accuracy whether or not a given "image chip" contained an image of a ship. 	Interestingly, we had a similar results with both XGB Classifier and Keras CNN.
 
