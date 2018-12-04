@@ -27,21 +27,21 @@ pip install -r requirements.txt
 ShipsNet is a labeled training dataset consiting of image chips extracted from Planet satellite imagery. It contains hundreds of 80x80 pixel RGB image chips labeled with either a "ship" or "no-ship" classification. Example images are contained in the images directory.
 
   # Ships.py
-  The Keras Sequential model in ships.py is a linear stack of layers. An input_shape arguement is passed to the first layer. The 					learning process is done via the compile method using Stochastic gradient descent (SGD) optimizer, with categorical_crossentropy 				string identifier and as this is a classification problem the 'accuracy' metric. The model is trained on a Numpy array of input data 		and labels using the fit function iterating on the data in batches of 32 samples.
+The Keras Sequential model in ships.py is a linear stack of layers. An input_shape arguement is passed to the first layer. The learning process is done via the compile method using Stochastic gradient descent (SGD) optimizer, with categorical_crossentropy string identifier and as this is a classification problem the 'accuracy' metric. The model is trained on a Numpy array of input data and labels using the fit function iterating on the data in batches of 32 samples.
 	
-	Results graphics are contained in the results/ships directory.
+Results graphics are contained in the results/ships directory.
 
   # Ships2.py
-	Convolutional neural networks are deep artificial neural networks that are used primarily to classify images (e.g. name what they 			see), cluster them by similarity (photo search), and perform object recognition within scenes. The convolutional network in ships2.py 	predicts with >90% accuracy whether or not a given "image chip" contained an image of a ship.
+Convolutional neural networks are deep artificial neural networks that are used primarily to classify images (e.g. name what they see), cluster them by similarity (photo search), and perform object recognition within scenes. The convolutional network in ships2.py 	predicts with >90% accuracy whether or not a given "image chip" contained an image of a ship.
 
 	# Model
-	A convolutional neural network (CNN) is defined within the ship2.py module using the sklearn library. This model supports the 80x80x3 	input dimensions of the ShipsNet image data. The Keras library was used to build a CNN.
+A convolutional neural network (CNN) is defined within the ship2.py module using the sklearn library. This model supports the 80x80x3 	input dimensions of the ShipsNet image data. The Keras library was used to build a CNN.
 
-	# Training
-	Class MLPClassifier implements a multi-layer perceptron (MLP) algorithm that trains using Backpropagation. MLP trains on two arrays: 		array X of size (n_samples, n_features), which holds the training samples represented as floating point feature vectors; and array y 		of size (n_samples,), which holds the target values (class labels) for the training samples. The defined CNN can be trained with the 		JSON version of the ShipsNet dataset. The latest version of shipsnet.json is available through the ShipsNet Kaggle page, which has 			further information describing the dataset layout.
+# Training
+Class MLPClassifier implements a multi-layer perceptron (MLP) algorithm that trains using Backpropagation. MLP trains on two arrays: array X of size (n_samples, n_features), which holds the training samples represented as floating point feature vectors; and array y of size (n_samples,), which holds the target values (class labels) for the training samples. The defined CNN can be trained with the JSON version of the ShipsNet dataset. The latest version of shipsnet.json is available through the ShipsNet Kaggle page, which has further information describing the dataset layout.
 
-	# Ship Classification
-	Several standard classifiers are compared and their K-Fold Cross-Validatiaon Accuracy returned numerically, and graphically as a 				boxplot. These results are then compared with the Keras CNN accuracy.
+# Ship Classification
+Several standard classifiers are compared and their K-Fold Cross-Validatiaon Accuracy returned numerically, and graphically as a boxplot. These results are then compared with the Keras CNN accuracy.
 
 	# Ships2.py Results
 	LR, Logistic Regression:          0.891562 (0.008155)
@@ -71,6 +71,6 @@ ShipsNet is a labeled training dataset consiting of image chips extracted from P
    		macro avg       0.96      0.95      0.96       800
 	 weighted avg       0.97      0.97      0.97       800
 
-	With this Keras CNN we were able to predict with >96% accuracy whether or not a given "image chip" contained an image of a ship. 				Interestingly, we had a similar results with both XGB Classifier and Keras CNN.
+With this Keras CNN we were able to predict with >96% accuracy whether or not a given "image chip" contained an image of a ship. 				Interestingly, we had a similar results with both XGB Classifier and Keras CNN.
 
-	Results graphics are contained in the results/ships2 directory.
+Results graphics are contained in the results/ships2 directory.
