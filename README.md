@@ -26,15 +26,15 @@ pip install -r requirements.txt
 # Methodology
 ShipsNet is a labeled training dataset consiting of image chips extracted from Planet satellite imagery. It contains hundreds of 80x80 pixel RGB image chips labeled with either a "ship" or "no-ship" classification. Example images are contained in the images directory.
 
-  # Ships.py
+# Ships.py
 The Keras Sequential model in ships.py is a linear stack of layers. An input_shape arguement is passed to the first layer. The learning process is done via the compile method using Stochastic gradient descent (SGD) optimizer, with categorical_crossentropy string identifier and as this is a classification problem the 'accuracy' metric. The model is trained on a Numpy array of input data and labels using the fit function iterating on the data in batches of 32 samples.
 	
 Results graphics are contained in the results/ships directory.
 
-  # Ships2.py
+# Ships2.py
 Convolutional neural networks are deep artificial neural networks that are used primarily to classify images (e.g. name what they see), cluster them by similarity (photo search), and perform object recognition within scenes. The convolutional network in ships2.py 	predicts with >90% accuracy whether or not a given "image chip" contained an image of a ship.
 
-	# Model
+# Model
 A convolutional neural network (CNN) is defined within the ship2.py module using the sklearn library. This model supports the 80x80x3 	input dimensions of the ShipsNet image data. The Keras library was used to build a CNN.
 
 # Training
@@ -43,7 +43,7 @@ Class MLPClassifier implements a multi-layer perceptron (MLP) algorithm that tra
 # Ship Classification
 Several standard classifiers are compared and their K-Fold Cross-Validatiaon Accuracy returned numerically, and graphically as a boxplot. These results are then compared with the Keras CNN accuracy.
 
-	# Ships2.py Results
+# Ships2.py Results
 	LR, Logistic Regression:          0.891562 (0.008155)
 
 	RF, Random Forest Classifier:     0.936875 (0.016044)
